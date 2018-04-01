@@ -1,0 +1,265 @@
+{
+  "{\"filename\":\"/home/moviesapp/app.js\",\"env\":{},\"retainLines\":false,\"highlightCode\":true,\"suppressDeprecationMessages\":false,\"presets\":[],\"plugins\":[[[],{\"loose\":false,\"spec\":false}],[[],null],[[],null],[[],{\"spec\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"loose\":false}],[[],null],[[],null],[[],null],[[],{\"loose\":false}],[[],null],[[],{\"loose\":false}],[[],null],[[],null],[[],{\"loose\":false}],[[],{\"async\":false,\"asyncGenerators\":false}]],\"ignore\":[],\"code\":true,\"metadata\":true,\"ast\":true,\"comments\":true,\"compact\":\"auto\",\"minified\":false,\"sourceRoot\":\"/home/moviesapp\",\"babelrc\":true,\"sourceType\":\"module\",\"moduleIds\":false,\"passPerPreset\":false,\"parserOpts\":false,\"generatorOpts\":false}:6.26.0": {
+    "metadata": {
+      "usedHelpers": [
+        "interopRequireDefault"
+      ],
+      "marked": [],
+      "modules": {
+        "imports": [
+          {
+            "source": "express",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "express"
+              }
+            ]
+          },
+          {
+            "source": "mongodb",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "mongodb"
+              }
+            ]
+          },
+          {
+            "source": "body-parser",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "bodyParser"
+              }
+            ]
+          },
+          {
+            "source": "mongodb",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "MongoClient"
+              }
+            ]
+          },
+          {
+            "source": "assert",
+            "imported": [
+              "default"
+            ],
+            "specifiers": [
+              {
+                "kind": "named",
+                "imported": "default",
+                "local": "assert"
+              }
+            ]
+          }
+        ],
+        "exports": {
+          "exported": [],
+          "specifiers": []
+        }
+      }
+    },
+    "options": {
+      "filename": "/home/moviesapp/app.js",
+      "filenameRelative": "/home/moviesapp/app.js",
+      "env": {},
+      "retainLines": false,
+      "highlightCode": true,
+      "suppressDeprecationMessages": false,
+      "presets": [],
+      "plugins": [
+        [
+          [],
+          {
+            "loose": false,
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "spec": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          null
+        ],
+        [
+          [],
+          {
+            "loose": false
+          }
+        ],
+        [
+          [],
+          {
+            "async": false,
+            "asyncGenerators": false
+          }
+        ]
+      ],
+      "ignore": [],
+      "code": true,
+      "metadata": true,
+      "ast": false,
+      "comments": true,
+      "compact": "auto",
+      "minified": false,
+      "sourceMaps": "both",
+      "sourceMapTarget": "app.js",
+      "sourceFileName": "app.js",
+      "sourceRoot": "/home/moviesapp",
+      "babelrc": false,
+      "sourceType": "module",
+      "moduleRoot": "/home/moviesapp",
+      "moduleIds": false,
+      "passPerPreset": false,
+      "parserOpts": false,
+      "generatorOpts": false,
+      "basename": "app"
+    },
+    "ignored": false,
+    "code": "'use strict';\n\nvar _express = require('express');\n\nvar _express2 = _interopRequireDefault(_express);\n\nvar _mongodb = require('mongodb');\n\nvar _mongodb2 = _interopRequireDefault(_mongodb);\n\nvar _bodyParser = require('body-parser');\n\nvar _bodyParser2 = _interopRequireDefault(_bodyParser);\n\nvar _assert = require('assert');\n\nvar _assert2 = _interopRequireDefault(_assert);\n\nfunction _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }\n\n// import MoviesRoutes from './app/routes/moviesRoutes';\n\nvar app = (0, _express2.default)();\nvar port = process.env.PORT || 3000;\n\nvar url = 'mongodb://db:27017/Movies';\n\napp.use(function (req, res, next) {\n    res.setHeader('Access-Control-Allow-Origin', '*');\n    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');\n    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');\n    res.setHeader('Access-Control-Allow-Credentials', true);\n    next();\n});\napp.use(_bodyParser2.default.json({ extended: true }));\napp.use(_bodyParser2.default.json());\n\n_mongodb2.default.connect(url, function (err, db) {\n    _assert2.default.equal(null, err);\n    console.log(\"Connected successfully to server\");\n    createCollated(db, function () {\n        db.close();\n    });\n});\n\nvar Movies = function Movies(db, callback) {\n    var movies = db.collection('movies');\n    movies.findOne();\n};\n\napp.get('/', function (req, res) {\n    res.send('Welcome to moviesapp');\n    console.log(\"Welcome to moviesapp\");\n});\n\napp.route('/movies').get(function (req, res) {\n    res.send('All movies');\n    console.log(\"All movies)\");\n});\n\napp.route('/movie/:id').get(function (req, res) {\n    res.send('Movies  1');\n    console.log(\"Movie 1\");\n});\n\napp.listen(port);\nconsole.log('Server start on ' + port);\n//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbImFwcC5qcyJdLCJuYW1lcyI6WyJhcHAiLCJwb3J0IiwicHJvY2VzcyIsImVudiIsIlBPUlQiLCJ1cmwiLCJ1c2UiLCJyZXEiLCJyZXMiLCJuZXh0Iiwic2V0SGVhZGVyIiwianNvbiIsImV4dGVuZGVkIiwiY29ubmVjdCIsImVyciIsImRiIiwiZXF1YWwiLCJjb25zb2xlIiwibG9nIiwiY3JlYXRlQ29sbGF0ZWQiLCJjbG9zZSIsIk1vdmllcyIsImNhbGxiYWNrIiwibW92aWVzIiwiY29sbGVjdGlvbiIsImZpbmRPbmUiLCJnZXQiLCJzZW5kIiwicm91dGUiLCJsaXN0ZW4iXSwibWFwcGluZ3MiOiI7O0FBQUE7Ozs7QUFDQTs7OztBQUNBOzs7O0FBRUE7Ozs7OztBQUNBOztBQUVBLElBQUlBLE1BQU0sd0JBQVY7QUFDQSxJQUFJQyxPQUFPQyxRQUFRQyxHQUFSLENBQVlDLElBQVosSUFBb0IsSUFBL0I7O0FBRUEsSUFBSUMsTUFBTSwyQkFBVjs7QUFFQUwsSUFBSU0sR0FBSixDQUFRLFVBQVVDLEdBQVYsRUFBZUMsR0FBZixFQUFvQkMsSUFBcEIsRUFBMEI7QUFDOUJELFFBQUlFLFNBQUosQ0FBYyw2QkFBZCxFQUE2QyxHQUE3QztBQUNBRixRQUFJRSxTQUFKLENBQWMsOEJBQWQsRUFBOEMscUJBQTlDO0FBQ0FGLFFBQUlFLFNBQUosQ0FBYyw4QkFBZCxFQUE4QyxnQ0FBOUM7QUFDQUYsUUFBSUUsU0FBSixDQUFjLGtDQUFkLEVBQWtELElBQWxEO0FBQ0FEO0FBQ0gsQ0FORDtBQU9BVCxJQUFJTSxHQUFKLENBQVEscUJBQVdLLElBQVgsQ0FBZ0IsRUFBRUMsVUFBVSxJQUFaLEVBQWhCLENBQVI7QUFDQVosSUFBSU0sR0FBSixDQUFRLHFCQUFXSyxJQUFYLEVBQVI7O0FBR0Esa0JBQVlFLE9BQVosQ0FBb0JSLEdBQXBCLEVBQXlCLFVBQUNTLEdBQUQsRUFBTUMsRUFBTixFQUFhO0FBQ2xDLHFCQUFPQyxLQUFQLENBQWEsSUFBYixFQUFtQkYsR0FBbkI7QUFDQUcsWUFBUUMsR0FBUixDQUFZLGtDQUFaO0FBQ0FDLG1CQUFlSixFQUFmLEVBQW1CLFlBQVc7QUFDMUJBLFdBQUdLLEtBQUg7QUFDRCxLQUZIO0FBR0gsQ0FORDs7QUFTQSxJQUFJQyxTQUFTLFNBQVRBLE1BQVMsQ0FBQ04sRUFBRCxFQUFLTyxRQUFMLEVBQWtCO0FBQzNCLFFBQUlDLFNBQVNSLEdBQUdTLFVBQUgsQ0FBYyxRQUFkLENBQWI7QUFDQUQsV0FBT0UsT0FBUDtBQUNILENBSEQ7O0FBTUF6QixJQUFJMEIsR0FBSixDQUFRLEdBQVIsRUFBYSxVQUFDbkIsR0FBRCxFQUFLQyxHQUFMLEVBQWE7QUFDdEJBLFFBQUltQixJQUFKLENBQVMsc0JBQVQ7QUFDQVYsWUFBUUMsR0FBUixDQUFZLHNCQUFaO0FBQ0gsQ0FIRDs7QUFNQWxCLElBQUk0QixLQUFKLENBQVUsU0FBVixFQUNLRixHQURMLENBQ1MsVUFBQ25CLEdBQUQsRUFBS0MsR0FBTCxFQUFhO0FBQ2RBLFFBQUltQixJQUFKLENBQVMsWUFBVDtBQUNBVixZQUFRQyxHQUFSLENBQVksYUFBWjtBQUNILENBSkw7O0FBTUFsQixJQUFJNEIsS0FBSixDQUFVLFlBQVYsRUFDS0YsR0FETCxDQUNTLFVBQUNuQixHQUFELEVBQUtDLEdBQUwsRUFBYTtBQUNkQSxRQUFJbUIsSUFBSixDQUFTLFdBQVQ7QUFDQVYsWUFBUUMsR0FBUixDQUFZLFNBQVo7QUFDSCxDQUpMOztBQU1BbEIsSUFBSTZCLE1BQUosQ0FBVzVCLElBQVg7QUFDQWdCLFFBQVFDLEdBQVIsQ0FBWSxxQkFBcUJqQixJQUFqQyIsImZpbGUiOiJhcHAuanMiLCJzb3VyY2VSb290IjoiL2hvbWUvbW92aWVzYXBwIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IGV4cHJlc3MgZnJvbSAnZXhwcmVzcyc7XG5pbXBvcnQgbW9uZ29kYiBmcm9tICdtb25nb2RiJztcbmltcG9ydCBib2R5UGFyc2VyIGZyb20gJ2JvZHktcGFyc2VyJztcbmltcG9ydCBNb25nb0NsaWVudCBmcm9tICdtb25nb2RiJztcbmltcG9ydCBhc3NlcnQgZnJvbSAnYXNzZXJ0Jztcbi8vIGltcG9ydCBNb3ZpZXNSb3V0ZXMgZnJvbSAnLi9hcHAvcm91dGVzL21vdmllc1JvdXRlcyc7XG5cbmxldCBhcHAgPSBleHByZXNzKCk7XG5sZXQgcG9ydCA9IHByb2Nlc3MuZW52LlBPUlQgfHwgMzAwMDtcblxubGV0IHVybCA9ICdtb25nb2RiOi8vZGI6MjcwMTcvTW92aWVzJztcblxuYXBwLnVzZShmdW5jdGlvbiAocmVxLCByZXMsIG5leHQpIHtcbiAgICByZXMuc2V0SGVhZGVyKCdBY2Nlc3MtQ29udHJvbC1BbGxvdy1PcmlnaW4nLCAnKicpO1xuICAgIHJlcy5zZXRIZWFkZXIoJ0FjY2Vzcy1Db250cm9sLUFsbG93LU1ldGhvZHMnLCAnR0VULFBVVCxQT1NULERFTEVURScpO1xuICAgIHJlcy5zZXRIZWFkZXIoJ0FjY2Vzcy1Db250cm9sLUFsbG93LUhlYWRlcnMnLCAnWC1SZXF1ZXN0ZWQtV2l0aCwgQ29udGVudC1UeXBlJyk7XG4gICAgcmVzLnNldEhlYWRlcignQWNjZXNzLUNvbnRyb2wtQWxsb3ctQ3JlZGVudGlhbHMnLCB0cnVlKTtcbiAgICBuZXh0KCk7XG59KTtcbmFwcC51c2UoYm9keVBhcnNlci5qc29uKHsgZXh0ZW5kZWQ6IHRydWUgfSkpO1xuYXBwLnVzZShib2R5UGFyc2VyLmpzb24oKSk7XG5cblxuTW9uZ29DbGllbnQuY29ubmVjdCh1cmwsIChlcnIsIGRiKSA9PiB7XG4gICAgYXNzZXJ0LmVxdWFsKG51bGwsIGVycik7XG4gICAgY29uc29sZS5sb2coXCJDb25uZWN0ZWQgc3VjY2Vzc2Z1bGx5IHRvIHNlcnZlclwiKTtcbiAgICBjcmVhdGVDb2xsYXRlZChkYiwgZnVuY3Rpb24oKSB7XG4gICAgICAgIGRiLmNsb3NlKCk7XG4gICAgICB9KTtcbn0pO1xuXG5cbmxldCBNb3ZpZXMgPSAoZGIsIGNhbGxiYWNrKSA9PiB7XG4gICAgbGV0IG1vdmllcyA9IGRiLmNvbGxlY3Rpb24oJ21vdmllcycpXG4gICAgbW92aWVzLmZpbmRPbmUoKTtcbn1cblxuXG5hcHAuZ2V0KCcvJywgKHJlcSxyZXMpID0+IHtcbiAgICByZXMuc2VuZCgnV2VsY29tZSB0byBtb3ZpZXNhcHAnKVxuICAgIGNvbnNvbGUubG9nKFwiV2VsY29tZSB0byBtb3ZpZXNhcHBcIilcbn0pXG5cbiAgICBcbmFwcC5yb3V0ZSgnL21vdmllcycpXG4gICAgLmdldCgocmVxLHJlcykgPT4ge1xuICAgICAgICByZXMuc2VuZCgnQWxsIG1vdmllcycpO1xuICAgICAgICBjb25zb2xlLmxvZyhcIkFsbCBtb3ZpZXMpXCIpO1xuICAgIH0pO1xuXG5hcHAucm91dGUoJy9tb3ZpZS86aWQnKVxuICAgIC5nZXQoKHJlcSxyZXMpID0+IHtcbiAgICAgICAgcmVzLnNlbmQoJ01vdmllcyAgMScpXG4gICAgICAgIGNvbnNvbGUubG9nKFwiTW92aWUgMVwiKTtcbiAgICB9KTtcblxuYXBwLmxpc3Rlbihwb3J0KTtcbmNvbnNvbGUubG9nKCdTZXJ2ZXIgc3RhcnQgb24gJyArIHBvcnQpOyJdfQ==",
+    "ast": null,
+    "map": {
+      "version": 3,
+      "sources": [
+        "app.js"
+      ],
+      "names": [
+        "app",
+        "port",
+        "process",
+        "env",
+        "PORT",
+        "url",
+        "use",
+        "req",
+        "res",
+        "next",
+        "setHeader",
+        "json",
+        "extended",
+        "connect",
+        "err",
+        "db",
+        "equal",
+        "console",
+        "log",
+        "createCollated",
+        "close",
+        "Movies",
+        "callback",
+        "movies",
+        "collection",
+        "findOne",
+        "get",
+        "send",
+        "route",
+        "listen"
+      ],
+      "mappings": ";;AAAA;;;;AACA;;;;AACA;;;;AAEA;;;;;;AACA;;AAEA,IAAIA,MAAM,wBAAV;AACA,IAAIC,OAAOC,QAAQC,GAAR,CAAYC,IAAZ,IAAoB,IAA/B;;AAEA,IAAIC,MAAM,2BAAV;;AAEAL,IAAIM,GAAJ,CAAQ,UAAUC,GAAV,EAAeC,GAAf,EAAoBC,IAApB,EAA0B;AAC9BD,QAAIE,SAAJ,CAAc,6BAAd,EAA6C,GAA7C;AACAF,QAAIE,SAAJ,CAAc,8BAAd,EAA8C,qBAA9C;AACAF,QAAIE,SAAJ,CAAc,8BAAd,EAA8C,gCAA9C;AACAF,QAAIE,SAAJ,CAAc,kCAAd,EAAkD,IAAlD;AACAD;AACH,CAND;AAOAT,IAAIM,GAAJ,CAAQ,qBAAWK,IAAX,CAAgB,EAAEC,UAAU,IAAZ,EAAhB,CAAR;AACAZ,IAAIM,GAAJ,CAAQ,qBAAWK,IAAX,EAAR;;AAGA,kBAAYE,OAAZ,CAAoBR,GAApB,EAAyB,UAACS,GAAD,EAAMC,EAAN,EAAa;AAClC,qBAAOC,KAAP,CAAa,IAAb,EAAmBF,GAAnB;AACAG,YAAQC,GAAR,CAAY,kCAAZ;AACAC,mBAAeJ,EAAf,EAAmB,YAAW;AAC1BA,WAAGK,KAAH;AACD,KAFH;AAGH,CAND;;AASA,IAAIC,SAAS,SAATA,MAAS,CAACN,EAAD,EAAKO,QAAL,EAAkB;AAC3B,QAAIC,SAASR,GAAGS,UAAH,CAAc,QAAd,CAAb;AACAD,WAAOE,OAAP;AACH,CAHD;;AAMAzB,IAAI0B,GAAJ,CAAQ,GAAR,EAAa,UAACnB,GAAD,EAAKC,GAAL,EAAa;AACtBA,QAAImB,IAAJ,CAAS,sBAAT;AACAV,YAAQC,GAAR,CAAY,sBAAZ;AACH,CAHD;;AAMAlB,IAAI4B,KAAJ,CAAU,SAAV,EACKF,GADL,CACS,UAACnB,GAAD,EAAKC,GAAL,EAAa;AACdA,QAAImB,IAAJ,CAAS,YAAT;AACAV,YAAQC,GAAR,CAAY,aAAZ;AACH,CAJL;;AAMAlB,IAAI4B,KAAJ,CAAU,YAAV,EACKF,GADL,CACS,UAACnB,GAAD,EAAKC,GAAL,EAAa;AACdA,QAAImB,IAAJ,CAAS,WAAT;AACAV,YAAQC,GAAR,CAAY,SAAZ;AACH,CAJL;;AAMAlB,IAAI6B,MAAJ,CAAW5B,IAAX;AACAgB,QAAQC,GAAR,CAAY,qBAAqBjB,IAAjC",
+      "file": "app.js",
+      "sourceRoot": "/home/moviesapp",
+      "sourcesContent": [
+        "import express from 'express';\nimport mongodb from 'mongodb';\nimport bodyParser from 'body-parser';\nimport MongoClient from 'mongodb';\nimport assert from 'assert';\n// import MoviesRoutes from './app/routes/moviesRoutes';\n\nlet app = express();\nlet port = process.env.PORT || 3000;\n\nlet url = 'mongodb://db:27017/Movies';\n\napp.use(function (req, res, next) {\n    res.setHeader('Access-Control-Allow-Origin', '*');\n    res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');\n    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');\n    res.setHeader('Access-Control-Allow-Credentials', true);\n    next();\n});\napp.use(bodyParser.json({ extended: true }));\napp.use(bodyParser.json());\n\n\nMongoClient.connect(url, (err, db) => {\n    assert.equal(null, err);\n    console.log(\"Connected successfully to server\");\n    createCollated(db, function() {\n        db.close();\n      });\n});\n\n\nlet Movies = (db, callback) => {\n    let movies = db.collection('movies')\n    movies.findOne();\n}\n\n\napp.get('/', (req,res) => {\n    res.send('Welcome to moviesapp')\n    console.log(\"Welcome to moviesapp\")\n})\n\n    \napp.route('/movies')\n    .get((req,res) => {\n        res.send('All movies');\n        console.log(\"All movies)\");\n    });\n\napp.route('/movie/:id')\n    .get((req,res) => {\n        res.send('Movies  1')\n        console.log(\"Movie 1\");\n    });\n\napp.listen(port);\nconsole.log('Server start on ' + port);"
+      ]
+    },
+    "mtime": 1522584284000
+  }
+}
